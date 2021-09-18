@@ -13,6 +13,7 @@ import model.Usuario;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -138,6 +139,33 @@ public class FrmManteProd extends JFrame {
 	}
 	
 	void listado() {
+		
+		
+				EntityManagerFactory fabrica = Persistence.createEntityManagerFactory("mysql");
+				
+				
+				EntityManager em = fabrica.createEntityManager();
+				
+				// listado de los usuarios
+				
+				TypedQuery<Usuario> query = em.createQuery("Select u from Usuario u",Usuario.class);
+				
+				List<Usuario> lstUsuarios = query.getResultList();
+				
+				System.out.println("Cantidad de usuarios : "+lstUsuarios.size());
+				
+				if (lstUsuarios.size()==0) {
+					System.out.println("Listado vacio");
+				}else {
+					System.out.println("Listado de usuarios");
+					for(Usuario u: lstUsuarios) {
+						System.out.println(">>>> "+u);
+					}
+				}
+				
+				
+				
+				em.close();
 		
 	}
 	
